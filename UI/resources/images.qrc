@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>images/Peugeot-logo.png</file>
+  </qresource>
+  <qresource prefix="views">
+    <file>images/test_view.jpg</file>
+  </qresource>
+</RCC>

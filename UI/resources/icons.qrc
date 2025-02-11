@@ -1,0 +1,56 @@
+<RCC>
+  <qresource prefix="tabs_icons">
+    <file>icons/tabs_icons/driving_assist.png</file>
+    <file>icons/tabs_icons/gps.png</file>
+    <file>icons/tabs_icons/home.png</file>
+    <file>icons/tabs_icons/media.png</file>
+    <file>icons/tabs_icons/parking_assist.png</file>
+    <file>icons/tabs_icons/radio.png</file>
+    <file>icons/tabs_icons/settings.png</file>
+  </qresource>
+  <qresource prefix="mediaplayer">
+    <file>icons/mediaplayer/forward.png</file>
+    <file>icons/mediaplayer/mute.png</file>
+    <file>icons/mediaplayer/next.png</file>
+    <file>icons/mediaplayer/pause.png</file>
+    <file>icons/mediaplayer/play.png</file>
+    <file>icons/mediaplayer/previous.png</file>
+    <file>icons/mediaplayer/repeat_disabled.png</file>
+    <file>icons/mediaplayer/repeat_enabled.png</file>
+    <file>icons/mediaplayer/repeat_one.png</file>
+    <file>icons/mediaplayer/rewind.png</file>
+    <file>icons/mediaplayer/shuffle_disabled.png</file>
+    <file>icons/mediaplayer/shuffle_enabled.png</file>
+    <file>icons/mediaplayer/stop.png</file>
+    <file>icons/mediaplayer/unmute.png</file>
+  </qresource>
+  <qresource prefix="settings">
+    <file>icons/settings/9022183_arrows_counter_clockwise_duotone_icon.png</file>
+    <file>icons/settings/9022398_cloud_arrow_down_duotone_icon.png</file>
+    <file>icons/settings/9022762_user_circle_minus_duotone_icon.png</file>
+    <file>icons/settings/9022807_thermometer_simple_duotone_icon.png</file>
+    <file>icons/settings/9022821_user_circle_plus_duotone_icon.png</file>
+  </qresource>
+  <qresource prefix="speed_icons">
+    <file>icons/speed/speed_set.png</file>
+  </qresource>
+  <qresource prefix="drive_assist">
+    <file>icons/drive_assist/brake.png</file>
+    <file>icons/drive_assist/greed_forward.png</file>
+    <file>icons/drive_assist/green_backward.png</file>
+    <file>icons/drive_assist/green_left.png</file>
+    <file>icons/drive_assist/green_right.png</file>
+  </qresource>
+  <qresource prefix="battery">
+    <file>icons/battery/0%.png</file>
+    <file>icons/battery/20%.png</file>
+    <file>icons/battery/40%.png</file>
+    <file>icons/battery/60%.png</file>
+    <file>icons/battery/80%.png</file>
+    <file>icons/battery/100%.png</file>
+    <file>icons/battery/charging.png</file>
+  </qresource>
+  <qresource prefix="temperature">
+    <file>icons/temperature/temperature.png</file>
+  </qresource>
+</RCC>

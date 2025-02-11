@@ -1,0 +1,35 @@
+<RCC>
+  <qresource prefix="road_signs">
+    <file>popups/road_signs/forbidden.png</file>
+    <file>popups/road_signs/no-parking.png</file>
+    <file>popups/road_signs/no-turn-right.png</file>
+    <file>popups/road_signs/pedestrian-crossing.png</file>
+    <file>popups/road_signs/road.png</file>
+    <file>popups/road_signs/road-signs.png</file>
+    <file>popups/road_signs/slippery-road.png</file>
+    <file>popups/road_signs/stop.png</file>
+    <file>popups/road_signs/traffic-lights.png</file>
+    <file>popups/road_signs/traffic-sign.png</file>
+    <file>popups/road_signs/two-way-street.png</file>
+    <file>popups/road_signs/uneven.png</file>
+    <file>popups/road_signs/warning.png</file>
+  </qresource>
+  <qresource prefix="speed_limits">
+    <file>popups/speed_limits/+130.png</file>
+    <file>popups/speed_limits/20.png</file>
+    <file>popups/speed_limits/30.png</file>
+    <file>popups/speed_limits/40.png</file>
+    <file>popups/speed_limits/50.png</file>
+    <file>popups/speed_limits/60.png</file>
+    <file>popups/speed_limits/70.png</file>
+    <file>popups/speed_limits/80.png</file>
+    <file>popups/speed_limits/90.png</file>
+    <file>popups/speed_limits/100.png</file>
+    <file>popups/speed_limits/110.png</file>
+    <file>popups/speed_limits/120.png</file>
+    <file>popups/speed_limits/130.png</file>
+  </qresource>
+  <qresource prefix="warnings">
+    <file>popups/warnings/collision.png</file>
+  </qresource>
+</RCC>
