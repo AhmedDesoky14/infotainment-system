@@ -7,11 +7,9 @@ from mutagen.id3 import ID3, APIC
 from mutagen.wavpack import WavPack
 from infotainment_screen_ui import Ui_MainWindow
 
-class MediaPlayerApp(QtWidgets.QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+class MediaPlayerApp:
+    def __init__(self, main_ui):
+        self.ui = main_ui
         
         self.mediaPlayer = QMediaPlayer()
         self.audioOutput = QAudioOutput()
@@ -86,7 +84,7 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
             self.filename.setText(selected_item.text())
             self.mediaPlayer.setSource(QtCore.QUrl.fromLocalFile(file_path))
             self.mediaPlayer.play()
-            self.playpause_button.setIcon(QtGui.QIcon("icons/pause.png"))
+            self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/pause.png"))
             self.has_selected_track = True
             self.set_song_cover(file_path)
 
@@ -99,24 +97,24 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
         
         if self.mediaPlayer.playbackState() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
-            self.playpause_button.setIcon(QtGui.QIcon("icons/play.png"))
+            self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/play.png"))
         else:
             self.mediaPlayer.play()
-            self.playpause_button.setIcon(QtGui.QIcon("icons/pause.png"))
+            self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/pause.png"))
             
     def stop_audio(self):
         self.mediaPlayer.stop()
-        self.playpause_button.setIcon(QtGui.QIcon("icons/play.png"))
+        self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/play.png"))
         
     def toggle_mute(self):
         self.is_muted = not self.is_muted
         self.audioOutput.setMuted(self.is_muted)
-        icon_path = "icons/mute.png" if self.is_muted else "icons/unmute.png"
+        icon_path = ":/mediaplayer/icons/mediaplayer/mute.png" if self.is_muted else ":/mediaplayer/icons/mediaplayer/unmute.png"
         self.mute_unmute_button.setIcon(QtGui.QIcon(icon_path))
 
     def change_volume(self, value):
         self.audioOutput.setVolume(value / 100)
-        self.mute_unmute_button.setIcon(QtGui.QIcon("icons/mute.png" if value == 0 else "icons/unmute.png"))
+        self.mute_unmute_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/mute.png" if value == 0 else ":/mediaplayer/icons/mediaplayer/unmute.png"))
         
     def toggle_shuffle(self):
         current_item = self.audioselect_list.currentItem()
@@ -129,7 +127,7 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
             self.is_shuffled = False
             self.audioselect_list.clear()
             self.audioselect_list.addItems(self.original_playlist)
-            self.shuffle_button.setIcon(QtGui.QIcon("icons/shuffle_disabled.png"))
+            self.shuffle_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/shuffle_disabled.png"))
         else:
             self.is_shuffled = True
             shuffled_playlist = self.original_playlist[:]
@@ -139,7 +137,7 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
                 shuffled_playlist.insert(0, current_track)
             self.audioselect_list.clear()
             self.audioselect_list.addItems(shuffled_playlist)
-            self.shuffle_button.setIcon(QtGui.QIcon("icons/shuffle_enabled.png"))
+            self.shuffle_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/shuffle_enabled.png"))
 
         # Keep the current track selected        
         if current_track:
@@ -150,13 +148,13 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
     def toggle_repeat(self):
         if self.repeat_mode == 0:
             self.repeat_mode = 1  # Repeat all
-            self.repeat_button.setIcon(QtGui.QIcon("icons/repeat_enabled.png"))
+            self.repeat_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/repeat_enabled.png"))
         elif self.repeat_mode == 1:
             self.repeat_mode = 2  # Repeat one track
-            self.repeat_button.setIcon(QtGui.QIcon("icons/repeat_one.png"))
+            self.repeat_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/repeat_one.png"))
         else:
             self.repeat_mode = 0  # No repeat
-            self.repeat_button.setIcon(QtGui.QIcon("icons/repeat_disabled.png"))
+            self.repeat_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/repeat_disabled.png"))
 
     def check_media_status(self, status):
         if status == QMediaPlayer.MediaStatus.EndOfMedia:
