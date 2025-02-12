@@ -33,7 +33,7 @@ class RadioApp(QMainWindow):
         self.load_radio()
 
     def load_radio(self):
-        radio_url = "https://radio.garden/visit/cairo/vtWTDbUW"
+        radio_url = "https://radio.garden/listen/quran-fm-98-2-idhaet-alqran-alkrym/GQxvGBNK"
         self.web_view.setUrl(QUrl(radio_url))
         self.web_view.show()
 
