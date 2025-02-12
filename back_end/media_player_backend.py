@@ -1,9 +1,10 @@
-import sys
-import os
-import random
+import sys, os, random, io
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtMultimediaWidgets import QVideoWidget
+from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, APIC
+from mutagen.wavpack import WavPack
 from infotainment_screen_ui import Ui_MainWindow
 
 class MediaPlayerApp(QtWidgets.QMainWindow):
@@ -27,6 +28,7 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
         self.media_tab = self.ui.screen_tabs.findChild(QtWidgets.QWidget, "media_tab")
         self.audioselect_list = self.media_tab.findChild(QtWidgets.QListWidget, "audioselect_list")
         self.filename = self.media_tab.findChild(QtWidgets.QLabel, "filename")
+        self.song_cover = self.media_tab.findChild(QtWidgets.QLabel, "song_cover")
         self.audio_file_progress_slidebar = self.media_tab.findChild(QtWidgets.QSlider, "audio_file_progress_slidebar")
         self.label_current_duration = self.media_tab.findChild(QtWidgets.QLabel, "label_current_duration")
         self.label_total_time = self.media_tab.findChild(QtWidgets.QLabel, "label_total_time")
@@ -41,9 +43,7 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
         self.mute_unmute_button = self.media_tab.findChild(QtWidgets.QPushButton, "mute_unmute_button")
         self.volume_slider = self.media_tab.findChild(QtWidgets.QSlider, "volume_slider")
 
-               
-        
-            
+                           
         # Connecting buttons to functions
         self.playpause_button.clicked.connect(self.toggle_play_pause)
         self.stop_button.clicked.connect(self.stop_audio)
@@ -88,6 +88,8 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
             self.mediaPlayer.play()
             self.playpause_button.setIcon(QtGui.QIcon("icons/pause.png"))
             self.has_selected_track = True
+            self.set_song_cover(file_path)
+
             
     def toggle_play_pause(self):
         if not self.has_selected_track and self.audioselect_list.count() > 0:
@@ -224,6 +226,39 @@ class MediaPlayerApp(QtWidgets.QMainWindow):
     def rewind_audio(self):
         self.mediaPlayer.setPosition(max(0, self.mediaPlayer.position() - 5000))
         
+    def set_song_cover(self, file_path):
+        """Extracts cover art from the audio file and sets it in QLabel. Uses a default image if no cover is found."""
+        cover_data = None
+
+        if file_path.lower().endswith('.mp3'):
+            try:
+                audio = MP3(file_path, ID3=ID3)
+                for tag in audio.tags.values():
+                    if isinstance(tag, APIC):  # Find album art
+                        cover_data = tag.data
+                        break
+            except Exception as e:
+                print(f"Error extracting MP3 cover: {e}")
+
+        elif file_path.lower().endswith('.wav'):
+            try:
+                audio = WavPack(file_path)
+                if hasattr(audio, 'pictures') and audio.pictures:
+                    cover_data = audio.pictures[0].data
+            except Exception as e:
+                print(f"Error extracting WAV cover: {e}")
+
+        pixmap = QtGui.QPixmap()
+    
+        if cover_data:
+            pixmap.loadFromData(QtCore.QByteArray(cover_data))
+        else:
+            # Load a default image when no cover is found
+            pixmap.load("media/default_cover.jpg") 
+
+        self.song_cover.setPixmap(pixmap)
+        self.song_cover.setScaledContents(True)  # Scale image to fit QLabel
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
