@@ -4,11 +4,9 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtCore import QUrl
 from infotainment_screen_ui import Ui_MainWindow
 
-class RadioApp(QMainWindow):
+class RadioApp:
     def __init__(self, main_ui):
-        super().__init__()
-        self.ui = main_ui
-        self.ui.setupUi(self)
+        self.ui = main_ui 
 
         # Locate Radio tab in infotainment UI
         self.radio_tab = self.ui.screen_tabs.findChild(QWidget, "radio_tab")

@@ -4,11 +4,9 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtCore import QUrl
 from infotainment_screen_ui import Ui_MainWindow
 
-class GoogleMapsApp(QMainWindow):
+class GPSapp:
     def __init__(self, main_ui):
-        super().__init__()
-        self.ui = main_ui
-        self.ui.setupUi(self)
+        self.ui = main_ui 
 
         # Locate GPS tab in infotainment UI
         self.gps_tab = self.ui.screen_tabs.findChild(QWidget, "gps_tab")
@@ -39,7 +37,7 @@ class GoogleMapsApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_window = GoogleMapsApp(Ui_MainWindow())  # Pass the main infotainment UI
+    main_window = GPSapp(Ui_MainWindow())  # Pass the main infotainment UI
     main_window.show()
     sys.exit(app.exec())
 
