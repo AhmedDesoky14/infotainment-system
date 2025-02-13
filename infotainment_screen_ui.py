@@ -20,9 +20,8 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QListWidgetItem, QMainWindow, QProgressBar, QPushButton,
     QSizePolicy, QSlider, QSpacerItem, QSpinBox,
     QTabWidget, QVBoxLayout, QWidget)
-import images_rc
-import popups_rc
-import icons_rc
+from UI.resources import images_rc, icons_rc, popups_rc
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
