@@ -252,7 +252,7 @@ class MediaPlayerApp:
             pixmap.loadFromData(QtCore.QByteArray(cover_data))
         else:
             # Load a default image when no cover is found
-            pixmap.load("media/default_cover.jpg") 
+            pixmap.load(":/images/song_cover/default_cover.jpeg") 
 
         self.song_cover.setPixmap(pixmap)
         self.song_cover.setScaledContents(True)  # Scale image to fit QLabel
