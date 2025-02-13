@@ -66,3 +66,12 @@ class auth_screen_window:
     #function to reset text of auth button label
     def reset_auth_button_text(self):
         screens.authentication_screen_ui.auth_button.setText()
+
+    #set frame to the auth camera view
+    def set_frame(self):
+        pass    #left to be implemented for OpenCV integration
+
+    #clear the auth camera view
+    def reset_authcamera(self):
+        screens.main_screen_ui.auth_camera_label.setPixmap(QPixmap())
+        screens.main_screen_ui.auth_camera_label.setStyleSheet("") # Remove all styles
