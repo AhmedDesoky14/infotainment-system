@@ -56,6 +56,7 @@ class delete_box(QWidget):
     def on_yes(self):
             selected_item = main_screen_ui.users_list.currentRow()
             main_screen_ui.users_list.takeItem(selected_item)
+            #make delete
             delete_confirm_box.close()
 
     #slot function when no is clicked

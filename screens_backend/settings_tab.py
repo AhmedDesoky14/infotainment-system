@@ -17,20 +17,28 @@ class settings_tab:
             screens.main_screen_ui.visual_mode_button.setText("Bright Mode")
             with open(screens.visual_mode_file_path, "w") as file:
                 file.write("1")
-            screens.main_screen_ui.centralwidget.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+                #set all screens in bright mode
+                screens.main_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+                screens.auth_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+                screens.logo_loading_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+                screens.delete_confirm_box.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
         else: #set dark mode
             self.bright_mode = False
             screens.main_screen_ui.visual_mode_button.setText("Dark Mode")
             with open(screens.visual_mode_file_path, "w") as file:
                 file.write("0")
-            screens.main_screen_ui.centralwidget.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            #set all screens in dark mode
+            screens.main_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            screens.auth_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            screens.logo_loading_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            screens.delete_confirm_box.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
 
     #slot function to add new user for the vehicle system
     def __on_add_user(self):
         #left to be implemented for face recognition integration
         screens.auth_screen.showFullScreen()
         #do add user
-        screens.auth_screen.close()
+        #screens.auth_screen.close()
 
     #slot function to remove a user from the vehicle system
     def __on_delete_user(self):

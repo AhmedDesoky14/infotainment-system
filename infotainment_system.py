@@ -75,49 +75,48 @@ class infotainment_system:
 
     #function to set the visual mode at start
     def __set_visual_mode(self):
+        #open file that stores last visual mode status
         with open(screens.visual_mode_file_path, "r") as file:
             value = file.read().strip()  # Remove extra spaces or newlines
         if (value == "0"): #Dark Mode
             settings_tab.bright_mode = False
-            #set all screens in dark mode
-            screens.main_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
-            screens.auth_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
-            screens.logo_loading_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
-            screens.delete_confirm_box.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
             #set visual mode button as dark mode and not checked
             screens.main_screen_ui.visual_mode_button.setChecked(False)
             screens.main_screen_ui.visual_mode_button.setText("Dark Mode")
         else:   #Bright compile
             settings_tab.bright_mode = True
-            #set all screens in bright mode
-            screens.main_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
-            screens.auth_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
-            screens.logo_loading_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
-            screens.delete_confirm_box.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
             #set visual mode button as bright mode and not checked
             screens.main_screen_ui.visual_mode_button.setChecked(True)
             screens.main_screen_ui.visual_mode_button.setText("Bright Mode")
+
 
     def __loading_screen(self):
         self.loading_thread = Loading_thread()
         self.loading_thread.progress_updated.connect(screens.logo_screen_ui.progressBar.setValue)
         self.loading_thread.loading_complete.connect(self.__on_loading_complete)
-        #show all screens but logo loading on top
+        #show all screens with logo screen on top
+        screens.main_screen_ui.screen_tabs.setCurrentIndex(0)
+        screens.delete_confirm_box.showFullScreen()
+        screens.main_screen.showFullScreen() #start show main screen
         screens.auth_screen.showFullScreen()
         screens.logo_loading_screen.showFullScreen()
-        #open all tabs then get back to first tab
-        screens.main_screen_ui.screen_tabs.setCurrentIndex(1)
-        screens.main_screen_ui.screen_tabs.setCurrentIndex(2)
-        screens.main_screen_ui.screen_tabs.setCurrentIndex(3)
-        screens.main_screen_ui.screen_tabs.setCurrentIndex(4)
-        screens.main_screen_ui.screen_tabs.setCurrentIndex(5)
-        screens.main_screen_ui.screen_tabs.setCurrentIndex(0)
+        if settings_tab.bright_mode:
+            screens.main_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+            screens.auth_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+            screens.logo_loading_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+            screens.delete_confirm_box.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(217, 234, 253, 1), stop:1 rgba(188, 204, 220, 1));")
+        else:
+            screens.main_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            screens.auth_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            screens.logo_loading_screen.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
+            screens.delete_confirm_box.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(82, 109, 130, 1), stop:1 rgba(39, 55, 77, 1));")
         self.loading_thread.start()    #start the thread
 
     #Slot function called when loading the application is complete
     def __on_loading_complete(self):
         screens.logo_screen_ui.loading_label.setStyleSheet("color: rgb(46, 194, 126);")
         screens.logo_screen_ui.loading_label.setText("Welcome!")
+        screens.delete_confirm_box.close()
         QTimer.singleShot(1000, screens.logo_loading_screen.close)  # 1s delay before closing
 
     #login authentication function
@@ -125,10 +124,10 @@ class infotainment_system:
         #left to be implemented for face recognition integration
         #do authentication
         #screens.auth_screen.close()
-        #show and start main menu screen after authentication
-        screens.main_screen.showFullScreen()
+        pass
 
     def __start_main(self):
+
         """====================================================================================================
             Main function, after initailzation every thing happens starting from here
         ===================================================================================================="""

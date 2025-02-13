@@ -45,8 +45,8 @@ class auth_screen_window:
 
     #slot function for clicking the authentication button, it raises the flag by 1 to allow face recognition sequence
     def __on_auth_button_click(self):
-        if (authentication_flag == False):
-            authentication_flag = True
+        if (self.authentication_flag == False):
+            self.authentication_flag = True
 
 
     #function to set text to auth text label
@@ -67,11 +67,11 @@ class auth_screen_window:
     def reset_auth_button_text(self):
         screens.authentication_screen_ui.auth_button.setText()
 
-    #set frame to the auth camera view
+    #set frame to the user camera view
     def set_frame(self):
         pass    #left to be implemented for OpenCV integration
 
-    #clear the auth camera view
+    #clear the user camera view
     def reset_authcamera(self):
-        screens.main_screen_ui.auth_camera_label.setPixmap(QPixmap())
-        screens.main_screen_ui.auth_camera_label.setStyleSheet("") # Remove all styles
+        screens.authentication_screen_ui.auth_camera_label.setPixmap(QPixmap())
+        screens.authentication_screen_ui.auth_camera_label.setStyleSheet("") # Remove all styles
