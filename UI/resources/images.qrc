@@ -5,4 +5,7 @@
   <qresource prefix="views">
     <file>images/test_view.jpg</file>
   </qresource>
+  <qresource prefix="media_cover">
+    <file>images/default_cover.jpg</file>
+  </qresource>
 </RCC>
