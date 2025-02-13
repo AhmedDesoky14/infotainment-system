@@ -13,17 +13,17 @@
         "UI_Python/ui_adduser_authentication.py",
         "UI_Python/ui_infotainment_screen.py",
         "UI_Python/ui_loadig_logo.py",
-        "home_tab.py",
-        "screens.py",
         "main.py",
-        "drive_assist_tab.py",
-        "settings_tab.py",
         "UI_Python/delete_confirm.ui",
         "UI_Python/ui_delete_confirm.py",
-        "gps_tab.py",
-        "radio_tab.py",
-        "media_player_tab.py",
         "infotainment_system.py",
-        "authentication_module.py"
+        "screens_backend/drive_assist_tab.py",
+        "screens_backend/gps_tab.py",
+        "screens_backend/home_tab.py",
+        "screens_backend/media_player_tab.py",
+        "screens_backend/radio_tab.py",
+        "screens_backend/screens.py",
+        "screens_backend/settings_tab.py",
+        "screens_backend/auth_screen_window.py"
     ]
 }

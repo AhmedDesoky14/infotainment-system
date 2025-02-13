@@ -6,6 +6,7 @@ from settings_tab import settings_tab
 from gps_tab import gps_tab
 from radio_tab import radio_tab
 from media_player_tab import media_player_tab
+from auth_screen_window import auth_screen_window
 import screens
 import time
 
@@ -23,6 +24,7 @@ class infotainment_system:
         self.radio = radio_tab()
         self.media = media_player_tab()
         self.settings = settings_tab()
+        self.authentication_window = auth_screen_window()
         self.__init_sequence()  #start init sequence
 
     def __init_sequence(self):
@@ -101,7 +103,6 @@ class infotainment_system:
         self.loading_thread.progress_updated.connect(screens.logo_screen_ui.progressBar.setValue)
         self.loading_thread.loading_complete.connect(self.__on_loading_complete)
         #show all screens but logo loading on top
-        screens.main_screen.showFullScreen()
         screens.auth_screen.showFullScreen()
         screens.logo_loading_screen.showFullScreen()
         #open all tabs then get back to first tab
@@ -123,7 +124,9 @@ class infotainment_system:
     def __authenticate(self):
         #left to be implemented for face recognition integration
         #do authentication
-        screens.auth_screen.close()
+        #screens.auth_screen.close()
+        #show and start main menu screen after authentication
+        screens.main_screen.showFullScreen()
 
     def __start_main(self):
         """====================================================================================================
