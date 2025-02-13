@@ -2,6 +2,9 @@
   <qresource prefix="logo">
     <file>images/Peugeot-logo.png</file>
   </qresource>
+  <qresource prefix="song_cover">
+    <file>images/default_cover.jpeg</file>
+  </qresource>
   <qresource prefix="views">
     <file>images/test_view.jpg</file>
   </qresource>

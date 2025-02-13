@@ -1,0 +1,29 @@
+{
+    "files": [
+        "README.md",
+        "UI_Python/adduser_authentication.ui",
+        "UI_Python/infotainment_screen.ui",
+        "UI_Python/loadig_logo.ui",
+        "UI_Python/resources/icons.qrc",
+        "UI_Python/resources/images.qrc",
+        "UI_Python/resources/popups.qrc",
+        "UI_Python/resources/rc_icons.py",
+        "UI_Python/resources/rc_images.py",
+        "UI_Python/resources/rc_popups.py",
+        "UI_Python/ui_adduser_authentication.py",
+        "UI_Python/ui_infotainment_screen.py",
+        "UI_Python/ui_loadig_logo.py",
+        "home_tab.py",
+        "screens.py",
+        "main.py",
+        "drive_assist_tab.py",
+        "settings_tab.py",
+        "UI_Python/delete_confirm.ui",
+        "UI_Python/ui_delete_confirm.py",
+        "gps_tab.py",
+        "radio_tab.py",
+        "media_player_tab.py",
+        "infotainment_system.py",
+        "authentication_module.py"
+    ]
+}

@@ -20,11 +20,18 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QListWidgetItem, QMainWindow, QProgressBar, QPushButton,
     QSizePolicy, QSlider, QSpacerItem, QSpinBox,
     QTabWidget, QVBoxLayout, QWidget)
-import images_rc
-import popups_rc
-import icons_rc
 
-class Ui_MainWindow(object):
+import os, sys
+# Get absolute path to UI/resources
+resources_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "UI_Python", "resources"))
+# Add to Python's module search path
+sys.path.append(resources_path)
+# Now import the resources
+import rc_images
+import rc_popups
+import rc_icons
+
+class Main_Screen_UI(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -42,6 +49,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setMinimumSize(QSize(800, 600))
         self.centralwidget.setMaximumSize(QSize(16777215, 16777215))
         self.centralwidget.setBaseSize(QSize(800, 600))
+        self.centralwidget.setStyleSheet(u"")
         self.gridLayout_4 = QGridLayout(self.centralwidget)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.verticalLayout_3 = QVBoxLayout()
@@ -250,7 +258,7 @@ class Ui_MainWindow(object):
 "}")
         self.screen_tabs.setTabPosition(QTabWidget.South)
         self.screen_tabs.setTabShape(QTabWidget.Rounded)
-        self.screen_tabs.setIconSize(QSize(32, 32))
+        self.screen_tabs.setIconSize(QSize(128, 55))
         self.screen_tabs.setElideMode(Qt.ElideNone)
         self.home_tab = QWidget()
         self.home_tab.setObjectName(u"home_tab")
@@ -447,7 +455,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:checked {\n"
-"background-color: #E9EFF4;\n"
+"background-color: #F8FAFC;\n"
 "}\n"
 "")
         icon = QIcon()
@@ -487,7 +495,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.front_camera_view)
 
         self.horizontalLayout_2.setStretch(0, 1)
-        self.horizontalLayout_2.setStretch(1, 3)
+        self.horizontalLayout_2.setStretch(1, 4)
 
         self.gridLayout.addLayout(self.horizontalLayout_2, 0, 0, 1, 1)
 
@@ -504,6 +512,7 @@ class Ui_MainWindow(object):
         self.gps_web_engine_view.setObjectName(u"gps_web_engine_view")
         sizePolicy1.setHeightForWidth(self.gps_web_engine_view.sizePolicy().hasHeightForWidth())
         self.gps_web_engine_view.setSizePolicy(sizePolicy1)
+        self.gps_web_engine_view.setStyleSheet(u"border-radius: 20px;")
 
         self.gridLayout_2.addWidget(self.gps_web_engine_view, 0, 0, 1, 1)
 
@@ -558,6 +567,8 @@ class Ui_MainWindow(object):
         self.song_cover.setObjectName(u"song_cover")
         self.song_cover.setMinimumSize(QSize(350, 140))
         self.song_cover.setBaseSize(QSize(350, 180))
+        self.song_cover.setPixmap(QPixmap(u":/song_cover/images/default_cover.jpeg"))
+        self.song_cover.setScaledContents(True)
 
         self.horizontalLayout_14.addWidget(self.song_cover)
 
@@ -664,24 +675,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_17 = QHBoxLayout()
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.label_total_time = QLabel(self.media_player)
-        self.label_total_time.setObjectName(u"label_total_time")
+        self.label_current_duration = QLabel(self.media_player)
+        self.label_current_duration.setObjectName(u"label_current_duration")
         font5 = QFont()
         font5.setPointSize(14)
         font5.setBold(True)
-        self.label_total_time.setFont(font5)
-        self.label_total_time.setStyleSheet(u"background: transparent;\n"
-"color: rgb(36, 31, 49);\n"
-"")
-
-        self.horizontalLayout_17.addWidget(self.label_total_time)
-
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
-
-        self.label_current_duration = QLabel(self.media_player)
-        self.label_current_duration.setObjectName(u"label_current_duration")
         self.label_current_duration.setFont(font5)
         self.label_current_duration.setStyleSheet(u"background: transparent;\n"
 "color: rgb(36, 31, 49);\n"
@@ -689,6 +687,19 @@ class Ui_MainWindow(object):
 "")
 
         self.horizontalLayout_17.addWidget(self.label_current_duration)
+
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
+
+        self.label_total_time = QLabel(self.media_player)
+        self.label_total_time.setObjectName(u"label_total_time")
+        self.label_total_time.setFont(font5)
+        self.label_total_time.setStyleSheet(u"background: transparent;\n"
+"color: rgb(36, 31, 49);\n"
+"")
+
+        self.horizontalLayout_17.addWidget(self.label_total_time)
 
 
         self.verticalLayout_10.addLayout(self.horizontalLayout_17)
@@ -1020,6 +1031,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_9.addItem(self.horizontalSpacer_4)
 
+        self.horizontalLayout_9.setStretch(0, 10)
+        self.horizontalLayout_9.setStretch(1, 1)
+        self.horizontalLayout_9.setStretch(2, 10)
 
         self.gridLayout_6.addLayout(self.horizontalLayout_9, 0, 1, 1, 1)
 
@@ -1047,6 +1061,7 @@ class Ui_MainWindow(object):
         self.warningx.setBaseSize(QSize(60, 60))
         self.warningx.setStyleSheet(u"background: transparent;\n"
 "")
+        self.warningx.setScaledContents(True)
         self.warningx.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_6.addWidget(self.warningx, 0, 0, 1, 1)
@@ -1075,6 +1090,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addItem(self.verticalSpacer_2)
 
+        self.verticalLayout_7.setStretch(0, 10)
+        self.verticalLayout_7.setStretch(1, 1)
+        self.verticalLayout_7.setStretch(2, 10)
 
         self.gridLayout_6.addLayout(self.verticalLayout_7, 1, 0, 1, 1)
 
@@ -1099,6 +1117,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_8.addItem(self.horizontalSpacer)
 
+        self.horizontalLayout_8.setStretch(0, 10)
+        self.horizontalLayout_8.setStretch(1, 1)
+        self.horizontalLayout_8.setStretch(2, 10)
 
         self.gridLayout_6.addLayout(self.horizontalLayout_8, 2, 1, 1, 1)
 
@@ -1127,7 +1148,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.right_icon.sizePolicy().hasHeightForWidth())
         self.right_icon.setSizePolicy(sizePolicy)
         self.right_icon.setMinimumSize(QSize(60, 60))
-        self.right_icon.setMaximumSize(QSize(60, 60))
+        self.right_icon.setMaximumSize(QSize(16777215, 16777215))
         self.right_icon.setStyleSheet(u"background: transparent;\n"
 "")
         self.right_icon.setScaledContents(True)
@@ -1139,6 +1160,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addItem(self.verticalSpacer_4)
 
+        self.verticalLayout_6.setStretch(0, 10)
+        self.verticalLayout_6.setStretch(1, 1)
+        self.verticalLayout_6.setStretch(2, 10)
 
         self.gridLayout_6.addLayout(self.verticalLayout_6, 1, 2, 1, 1)
 
@@ -1170,6 +1194,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.collision_warning, 2, 2, 1, 1)
 
+        self.gridLayout_6.setRowStretch(0, 1)
+        self.gridLayout_6.setRowStretch(1, 15)
+        self.gridLayout_6.setRowStretch(2, 1)
+        self.gridLayout_6.setColumnStretch(0, 1)
+        self.gridLayout_6.setColumnStretch(1, 15)
+        self.gridLayout_6.setColumnStretch(2, 1)
 
         self.gridLayout_7.addLayout(self.gridLayout_6, 0, 0, 1, 1)
 
@@ -1473,8 +1503,8 @@ class Ui_MainWindow(object):
         self.screen_tabs.setTabText(self.screen_tabs.indexOf(self.gps_tab), QCoreApplication.translate("MainWindow", u"GPS", None))
         self.song_cover.setText("")
         self.filename.setText(QCoreApplication.translate("MainWindow", u"Song Name", None))
-        self.label_total_time.setText(QCoreApplication.translate("MainWindow", u"00:00:00", None))
         self.label_current_duration.setText(QCoreApplication.translate("MainWindow", u"00:00:00", None))
+        self.label_total_time.setText(QCoreApplication.translate("MainWindow", u"00:00:00", None))
         self.shuffle_button.setText("")
         self.previous_button.setText("")
         self.rewind_button.setText("")

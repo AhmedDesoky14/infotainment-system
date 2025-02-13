@@ -18,7 +18,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QProgressBar,
     QSizePolicy, QSpacerItem, QWidget)
 
-class Ui_Form(object):
+import os, sys
+# Get absolute path to UI/resources
+resources_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "UI_Python", "resources"))
+# Add to Python's module search path
+sys.path.append(resources_path)
+# Now import the resources
+import rc_images
+
+class Logo_Window(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -36,7 +44,7 @@ class Ui_Form(object):
         self.label.setMaximumSize(QSize(800, 800))
         self.label.setStyleSheet(u"background: transparent;\n"
 "")
-        self.label.setPixmap(QPixmap(u"resources/images/Peugeot-logo.png"))
+        self.label.setPixmap(QPixmap(u":/logo/images/Peugeot-logo.png"))
         self.label.setScaledContents(True)
         self.label.setAlignment(Qt.AlignCenter)
 

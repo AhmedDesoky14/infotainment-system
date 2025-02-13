@@ -52,7 +52,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>resources/images/Peugeot-logo.png</pixmap>
+      <pixmap resource="resources/images.qrc">:/logo/images/Peugeot-logo.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -160,6 +160,8 @@ color: rgb(36, 31, 49);</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources/images.qrc"/>
+ </resources>
  <connections/>
 </ui>

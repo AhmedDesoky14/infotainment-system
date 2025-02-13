@@ -53,6 +53,9 @@
      <height>600</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,7">
@@ -544,8 +547,8 @@ QTabBar::tab:selected {
         </property>
         <property name="iconSize">
          <size>
-          <width>32</width>
-          <height>32</height>
+          <width>128</width>
+          <height>55</height>
          </size>
         </property>
         <property name="elideMode">
@@ -567,7 +570,7 @@ QTabBar::tab:selected {
          </attribute>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,3">
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,4">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,1,1,1,1">
               <property name="spacing">
@@ -1009,7 +1012,7 @@ background: transparent;
 }
 
 QPushButton:checked {
-background-color: #E9EFF4;
+background-color: #F8FAFC;
 }
 </string>
                 </property>
@@ -1127,6 +1130,9 @@ background-color: #E9EFF4;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border-radius: 20px;</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1214,6 +1220,12 @@ QListView::item:selected:!active
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="resources/icons.qrc">:/song_cover/images/default_cover.jpeg</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -1367,7 +1379,7 @@ QSlider::handle:horizontal:hover  {
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
-                  <widget class="QLabel" name="label_total_time">
+                  <widget class="QLabel" name="label_current_duration">
                    <property name="font">
                     <font>
                      <pointsize>14</pointsize>
@@ -1378,6 +1390,7 @@ QSlider::handle:horizontal:hover  {
                    <property name="styleSheet">
                     <string notr="true">background: transparent;
 color: rgb(36, 31, 49);
+
 </string>
                    </property>
                    <property name="text">
@@ -1399,7 +1412,7 @@ color: rgb(36, 31, 49);
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_current_duration">
+                  <widget class="QLabel" name="label_total_time">
                    <property name="font">
                     <font>
                      <pointsize>14</pointsize>
@@ -1410,7 +1423,6 @@ color: rgb(36, 31, 49);
                    <property name="styleSheet">
                     <string notr="true">background: transparent;
 color: rgb(36, 31, 49);
-
 </string>
                    </property>
                    <property name="text">
@@ -1885,9 +1897,9 @@ QSlider::handle:horizontal:hover  {
          </attribute>
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_6">
+           <layout class="QGridLayout" name="gridLayout_6" rowstretch="1,15,1" columnstretch="1,15,1">
             <item row="0" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="10,1,10">
               <item>
                <spacer name="horizontalSpacer_3">
                 <property name="orientation">
@@ -2010,13 +2022,16 @@ QSlider::handle:horizontal:hover  {
               <property name="text">
                <string/>
               </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <layout class="QVBoxLayout" name="verticalLayout_7">
+             <layout class="QVBoxLayout" name="verticalLayout_7" stretch="10,1,10">
               <item>
                <spacer name="verticalSpacer">
                 <property name="orientation">
@@ -2087,7 +2102,7 @@ QSlider::handle:horizontal:hover  {
              </layout>
             </item>
             <item row="2" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="10,1,10">
               <item>
                <spacer name="horizontalSpacer_2">
                 <property name="orientation">
@@ -2190,7 +2205,7 @@ QSlider::handle:horizontal:hover  {
              </widget>
             </item>
             <item row="1" column="2">
-             <layout class="QVBoxLayout" name="verticalLayout_6">
+             <layout class="QVBoxLayout" name="verticalLayout_6" stretch="10,1,10">
               <item>
                <spacer name="verticalSpacer_3">
                 <property name="orientation">
@@ -2220,8 +2235,8 @@ QSlider::handle:horizontal:hover  {
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>60</width>
-                  <height>60</height>
+                  <width>16777215</width>
+                  <height>16777215</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -2872,9 +2887,9 @@ background-color: #E9EFF4;
   </widget>
  </widget>
  <resources>
-  <include location="resources/images.qrc"/>
-  <include location="resources/popups.qrc"/>
   <include location="resources/icons.qrc"/>
+  <include location="resources/popups.qrc"/>
+  <include location="resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>

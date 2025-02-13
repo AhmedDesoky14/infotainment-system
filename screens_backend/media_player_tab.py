@@ -1,28 +1,27 @@
-import sys, os, random, io
+# This Python file uses the following encoding: utf-8
+import os, random
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PySide6.QtMultimediaWidgets import QVideoWidget
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC
 from mutagen.wavpack import WavPack
-from infotainment_screen_ui import Ui_MainWindow
+import screens
 
-class MediaPlayerApp:
-    def __init__(self, main_ui):
-        self.ui = main_ui
-        
+
+class media_player_tab:
+    def __init__(self):
+        self.ui = screens.main_screen_ui
         self.mediaPlayer = QMediaPlayer()
         self.audioOutput = QAudioOutput()
         self.mediaPlayer.setAudioOutput(self.audioOutput)
         self.audioOutput.setVolume(0.5)
-        
+
         self.has_selected_track = False
         self.is_muted = False
         self.is_shuffled = False
         self.repeat_mode = 0  # 0 = No Repeat, 1 = Repeat All, 2 = Repeat One
         self.original_playlist = []
-        
-        
+
         self.media_tab = self.ui.screen_tabs.findChild(QtWidgets.QWidget, "media_tab")
         self.audioselect_list = self.media_tab.findChild(QtWidgets.QListWidget, "audioselect_list")
         self.filename = self.media_tab.findChild(QtWidgets.QLabel, "filename")
@@ -41,7 +40,6 @@ class MediaPlayerApp:
         self.mute_unmute_button = self.media_tab.findChild(QtWidgets.QPushButton, "mute_unmute_button")
         self.volume_slider = self.media_tab.findChild(QtWidgets.QSlider, "volume_slider")
 
-                           
         # Connecting buttons to functions
         self.playpause_button.clicked.connect(self.toggle_play_pause)
         self.stop_button.clicked.connect(self.stop_audio)
@@ -61,22 +59,23 @@ class MediaPlayerApp:
         self.mediaPlayer.mediaStatusChanged.connect(self.check_media_status)
         self.audio_file_progress_slidebar.sliderReleased.connect(self.set_position)
         self.audio_file_progress_slidebar.sliderPressed.connect(self.pause_while_seeking)
-        
+
         self.load_media_files()
 
-
+    #load media files
     def load_media_files(self):
-        media_dir = "media"
-        if not os.path.exists(media_dir):
-            os.makedirs(media_dir)
-        
-        self.audioselect_list.clear()
-        self.original_playlist = []
-        for file in os.listdir(media_dir):
-            if file.endswith(".mp3") or file.endswith(".wav"):
-                self.original_playlist.append(file)
-                self.audioselect_list.addItem(file)
+         media_dir = "media"
+         if not os.path.exists(media_dir):
+             os.makedirs(media_dir)
 
+         self.audioselect_list.clear()
+         self.original_playlist = []
+         for file in os.listdir(media_dir):
+             if file.endswith(".mp3") or file.endswith(".wav"):
+                 self.original_playlist.append(file)
+                 self.audioselect_list.addItem(file)
+
+    #play selected media file
     def play_selected_file(self):
         selected_item = self.audioselect_list.currentItem()
         if selected_item:
@@ -88,34 +87,39 @@ class MediaPlayerApp:
             self.has_selected_track = True
             self.set_song_cover(file_path)
 
-            
+    #Play/Pause functionality
     def toggle_play_pause(self):
         if not self.has_selected_track and self.audioselect_list.count() > 0:
             self.audioselect_list.setCurrentRow(0)
             self.play_selected_file()
             return
-        
+
         if self.mediaPlayer.playbackState() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
             self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/play.png"))
         else:
             self.mediaPlayer.play()
             self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/pause.png"))
-            
+
+    #stop player
     def stop_audio(self):
         self.mediaPlayer.stop()
         self.playpause_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/play.png"))
-        
+
+    #mute/unmute function
     def toggle_mute(self):
         self.is_muted = not self.is_muted
         self.audioOutput.setMuted(self.is_muted)
         icon_path = ":/mediaplayer/icons/mediaplayer/mute.png" if self.is_muted else ":/mediaplayer/icons/mediaplayer/unmute.png"
         self.mute_unmute_button.setIcon(QtGui.QIcon(icon_path))
 
+    #change volume function
     def change_volume(self, value):
         self.audioOutput.setVolume(value / 100)
         self.mute_unmute_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/mute.png" if value == 0 else ":/mediaplayer/icons/mediaplayer/unmute.png"))
-        
+
+
+    #toggle shuffle functionality
     def toggle_shuffle(self):
         current_item = self.audioselect_list.currentItem()
         if current_item:
@@ -139,12 +143,13 @@ class MediaPlayerApp:
             self.audioselect_list.addItems(shuffled_playlist)
             self.shuffle_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/shuffle_enabled.png"))
 
-        # Keep the current track selected        
+        # Keep the current track selected
         if current_track:
             items = self.audioselect_list.findItems(current_track, QtCore.Qt.MatchExactly)
             if items:
                 self.audioselect_list.setCurrentItem(items[0])
 
+    #toggle repeat function for repeating songs
     def toggle_repeat(self):
         if self.repeat_mode == 0:
             self.repeat_mode = 1  # Repeat all
@@ -156,6 +161,7 @@ class MediaPlayerApp:
             self.repeat_mode = 0  # No repeat
             self.repeat_button.setIcon(QtGui.QIcon(":/mediaplayer/icons/mediaplayer/repeat_disabled.png"))
 
+    #check media player status
     def check_media_status(self, status):
         if status == QMediaPlayer.MediaStatus.EndOfMedia:
             if self.repeat_mode == 2:  # Repeat current track
@@ -169,6 +175,7 @@ class MediaPlayerApp:
                     self.audioselect_list.setCurrentRow(0)
                     self.play_selected_file()
 
+    #play next function
     def play_next(self):
         if self.repeat_mode == 2:  # Repeat one mode, restart current track
             self.mediaPlayer.setPosition(0)
@@ -181,7 +188,10 @@ class MediaPlayerApp:
             elif self.repeat_mode == 1:  # Repeat all mode, go back to first track
                 self.audioselect_list.setCurrentRow(0)
                 self.play_selected_file()
-    
+
+
+
+    #play previous function
     def play_previous(self):
         if self.repeat_mode == 2:  # Repeat one mode, restart current track
             self.mediaPlayer.setPosition(0)
@@ -195,35 +205,43 @@ class MediaPlayerApp:
                 last_index = self.audioselect_list.count() - 1
                 self.audioselect_list.setCurrentRow(last_index)
                 self.play_selected_file()
-                
+
+    #set time format for the playing media
     def format_time(self, ms):
         seconds = (ms // 1000) % 60
         minutes = (ms // 60000) % 60
         hours = (ms // 3600000)
         return f"{hours:02}:{minutes:02}:{seconds:02}"
-    
+
+    #update duration for the playing media
     def update_duration(self, duration):
         self.audio_file_progress_slidebar.setMaximum(duration)
         self.label_total_time.setText(self.format_time(duration))
 
+    #update slider position for the duration of the playing media
     def update_position(self, position):
         self.audio_file_progress_slidebar.setValue(position)
         self.label_current_duration.setText(self.format_time(position))
 
+    #pause the audio while seeking a certain point
     def pause_while_seeking(self):
         self.mediaPlayer.pause()
-    
+
+    #set current playing media position
     def set_position(self):
         position = self.audio_file_progress_slidebar.value()
         self.mediaPlayer.setPosition(position)
         self.mediaPlayer.play()
-        
+
+    #forward current playing media position
     def forward_audio(self):
         self.mediaPlayer.setPosition(min(self.mediaPlayer.duration(), self.mediaPlayer.position() + 5000))
-        
+
+    #rewind current playing media position
     def rewind_audio(self):
         self.mediaPlayer.setPosition(max(0, self.mediaPlayer.position() - 5000))
-        
+
+    #set song cover to prview while playing the current media
     def set_song_cover(self, file_path):
         """Extracts cover art from the audio file and sets it in QLabel. Uses a default image if no cover is found."""
         cover_data = None
@@ -247,21 +265,13 @@ class MediaPlayerApp:
                 print(f"Error extracting WAV cover: {e}")
 
         pixmap = QtGui.QPixmap()
-    
+
         if cover_data:
             pixmap.loadFromData(QtCore.QByteArray(cover_data))
         else:
             # Load a default image when no cover is found
-            pixmap.load(":/images/song_cover/default_cover.jpeg") 
+            pixmap.load(":/song_cover/images/default_cover.jpeg")
 
         self.song_cover.setPixmap(pixmap)
         self.song_cover.setScaledContents(True)  # Scale image to fit QLabel
 
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    window = MediaPlayerApp()
-    window.show()
-    sys.exit(app.exec())
-
-        

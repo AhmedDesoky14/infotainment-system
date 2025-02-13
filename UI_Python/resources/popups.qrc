@@ -29,7 +29,7 @@
     <file>popups/speed_limits/120.png</file>
     <file>popups/speed_limits/130.png</file>
   </qresource>
-  <qresource prefix="warnings">
-    <file>popups/warnings/collision.png</file>
+  <qresource prefix="collision">
+    <file>popups/collision.png</file>
   </qresource>
 </RCC>

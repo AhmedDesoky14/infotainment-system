@@ -8,6 +8,14 @@
     <file>icons/tabs_icons/radio.png</file>
     <file>icons/tabs_icons/settings.png</file>
   </qresource>
+  <qresource prefix="song_cover">
+    <file>images/default_cover.jpeg</file>
+  </qresource>
+  <qresource prefix="newPrefix"/>
+  <qresource prefix="turning">
+    <file>icons/turning/turn_left.png</file>
+    <file>icons/turning/turn_right.png</file>
+  </qresource>
   <qresource prefix="mediaplayer">
     <file>icons/mediaplayer/forward.png</file>
     <file>icons/mediaplayer/mute.png</file>
