@@ -9,9 +9,38 @@ from media_player_tab import media_player_tab
 from auth_screen_window import auth_screen_window
 import screens
 import time
+from PySide6.QtCore import Slot
+from enum import Enum
+from PySide6.QtGui import QImage, QPixmap
+import sys
+import os
+from screens_backend.captured_images import CapturedImages
+
+
+
+class FaceRecognitionThread(QThread):
+    authentication_success = Signal(bool)  # Signal to indicate authentication success
+
+    def __init__(self, authentication_window):
+        super().__init__()
+        self.authentication_window = authentication_window
+
+    def run(self):
+        """
+        Runs the face recognition process in a separate thread.
+        """
+        self.authentication_window.set_frame_auth()
+        self.authentication_success.emit(True)  # Emit success signal
+
+
+class TEXT_COLOR(Enum):
+    RED = """QLabel { color: rgb(192, 28, 40); }"""
+    YELLOW = """QLabel { color: rgb(246, 211, 45); }"""
+    GREEN = """QLabel { color: rgb(38, 162, 105); }"""
 
 class infotainment_system:
     def __init__(self):
+
         #initialize QWindow, QWidgets and setup UI
         screens.main_screen = screens.infotainment_screen()
         screens.auth_screen = screens.authentication_screen()
@@ -26,6 +55,11 @@ class infotainment_system:
         self.settings = settings_tab()
         self.authentication_window = auth_screen_window()
         self.__init_sequence()  #start init sequence
+        screens.main_screen_ui.screen_tabs.currentChanged.connect(self.on_tab_changed)
+        #self.on_tab_changed(initial_index) 
+        self.auth_flag = None
+        #list_user_function
+        self.settings.user_added_signal.connect(self.__load_users)
 
     def __init_sequence(self):
         #call init functions
@@ -67,11 +101,15 @@ class infotainment_system:
         screens.main_screen_ui.users_list.clear()
 
     #function to load all users to show into the users list
+    @Slot()
     def __load_users(self):
+        self.script_dir_data = os.path.dirname(os.path.abspath(__file__))
+        self.data_file_path = os.path.join(self.script_dir_data, "screens_backend/captured_images_data.py")
+        self.captured_images = CapturedImages(self.data_file_path)
         """ Reads a text file and adds each line to QListWidget users list """
-        with open(screens.users_list_file_path, "r", encoding="utf-8") as file:
-            line = file.readlines()  # Read all lines
-            screens.main_screen_ui.users_list.addItems(line)  # Add to user list in the settings window
+        line, _ = self.captured_images.get_loaded_data()
+        screens.main_screen_ui.users_list.clear() 
+        screens.main_screen_ui.users_list.addItems(line)  # Add to user list in the settings window
 
     #function to set the visual mode at start
     def __set_visual_mode(self):
@@ -97,7 +135,7 @@ class infotainment_system:
         #show all screens with logo screen on top
         screens.main_screen_ui.screen_tabs.setCurrentIndex(0)
         screens.delete_confirm_box.showFullScreen()
-        screens.main_screen.showFullScreen() #start show main screen
+        screens.main_screen.hide() #start show main screen
         screens.auth_screen.showFullScreen()
         screens.logo_loading_screen.showFullScreen()
         if settings_tab.bright_mode:
@@ -120,19 +158,74 @@ class infotainment_system:
         QTimer.singleShot(1000, screens.logo_loading_screen.close)  # 1s delay before closing
 
     #login authentication function
+
     def __authenticate(self):
-        #left to be implemented for face recognition integration
-        #do authentication
-        #screens.auth_screen.close()
-        pass
+        screens.auth_screen.showFullScreen()
+        self.__start_authentication()
+
+
+    def __start_authentication(self):
+        """Starts the face recognition process in a separate thread."""
+        
+        self.auth_flag = False
+        self.face_recognition_thread = FaceRecognitionThread(self.authentication_window)
+        self.face_recognition_thread.authentication_success.connect(self.__on_authentication_success)
+        self.face_recognition_thread.start()
+
+
+
+    def __on_authentication_success(self, success: bool):
+        """Handles the authentication success signal."""
+        print(f"**************************fffffffff*******{success}")
+        if success:
+            self.auth_flag = True
+            print("Authentication successful.")
+            self.authentication_window.reset_usercamera()
+            screens.auth_screen.close()
+            self.__start_main()
+        else:
+            print("Authentication failed.")
+
+
+
+    def closeEvent(self, event):
+        """
+        Ensures the face recognition thread is stopped when the window is closed.
+        """
+        if hasattr(self, 'face_recognition_thread'):
+            self.face_recognition_thread.quit()
+            self.face_recognition_thread.wait()
+        event.accept()
+
 
     def __start_main(self):
 
         """====================================================================================================
             Main function, after initailzation every thing happens starting from here
         ===================================================================================================="""
+        
+        if self.auth_flag:
+            screens.main_screen.showFullScreen()
+            # index = screens.main_screen_ui.screen_tabs.currentChanged.connect()
+            # screens.main_screen_ui.screen_tabs.currentChanged.connect(index)
+            
 
 
+    @Slot(int)
+    def on_tab_changed(self, index):
+        """Slot to handle tab changes. Only works if self.auth_flag is True."""
+        # Perform actions based on the new tab index
+        if index == 4:
+            self.home.reset_usercamera()
+            self.drive_assist.set_frame()
+        elif index == 0:
+            self.drive_assist.reset_usercamera()
+            self.home.set_frame()
+        else:
+            self.drive_assist.reset_usercamera()
+            self.home.reset_usercamera()
+
+            
 
 #QThread child class to run specific task which is simulate loading
 class Loading_thread(QThread):

@@ -6,7 +6,7 @@ from ui_adduser_authentication import Authentcation_Window
 from ui_delete_confirm import DeleteBox
 
 visual_mode_file_path = "UI_Python/bright_dark.txt"
-users_list_file_path = "credentials/users_list.txt"
+users_list_file_path = "./credentials/users_list.txt"
 
 main_screen_ui = None #Main screen UI
 authentication_screen_ui = None #Authentication screen UI
@@ -56,7 +56,6 @@ class delete_box(QWidget):
     def on_yes(self):
             selected_item = main_screen_ui.users_list.currentRow()
             main_screen_ui.users_list.takeItem(selected_item)
-            #make delete
             delete_confirm_box.close()
 
     #slot function when no is clicked
